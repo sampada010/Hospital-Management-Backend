@@ -17,7 +17,7 @@ cd Hospital-Management-Backend
 npm install express mongoose multer bcrypt cloudinary cors dotenv jsonwebtoken nodemon validator
 ```
 
-3️⃣ Set Up Environment Variables
+### 3️⃣ Set Up Environment Variables
 Create a .env file in the root directory and add:
 
 ```env
@@ -27,11 +27,11 @@ CLOUDINARY_CLOUD_NAME=your_cloudinary_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
 JWT_SECRET=your_jwt_secret
-ADMIN_EMAIL=admin@hospital.com
-ADMIN_PASSWORD=admin123
+ADMIN_EMAIL=admin-email
+ADMIN_PASSWORD=admin-pw
 ```
 
-4️⃣ Run the Server
+### 4️⃣ Run the Server
 ```sh
 npm start
 ```
