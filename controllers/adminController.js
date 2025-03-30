@@ -1,9 +1,10 @@
-import DoctorModel from "../models/doctorModel.js";
+import DoctorModel from '../models/DoctorModel.js';
 import validator from 'validator';
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken';
+import appointmentModel from "../models/appointmentModel.js";
 
-export const addDoctor = async (req, res) => {
+const addDoctor = async (req, res) => {
     try {
         console.log("🔹 Received File:", req.file);
         console.log("🔹 Received JSON:", req.body);
@@ -52,7 +53,7 @@ export const addDoctor = async (req, res) => {
     }
 };
 
-export const loginAdmin = async(req, res) => {
+const loginAdmin = async(req, res) => {
     try{
         const { email, password } = req.body;
         if(!email || !password){
@@ -72,3 +73,31 @@ export const loginAdmin = async(req, res) => {
         res.status(500).json({message: 'Internal Server Error'})
     }
 }
+
+
+const allDoctors = async (req, res) => {
+    try {
+        const doctors = await DoctorModel.find({}).select("-password -__v");
+        res.status(200).json(doctors);
+    } catch (error) {
+        console.error("❌ Error:", error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+}
+
+
+const appointmentsAdmin = async (req, res) => {
+    try {
+        
+        const appointments = await appointmentModel.find({})
+        res.status(200).json(appointments);
+
+    } catch (error) {
+        console.error("❌ Error:", error);
+        res.status(500).json({ message: "Internal Server Error" });
+        
+    }
+}
+
+
+export { addDoctor, loginAdmin, allDoctors, appointmentsAdmin };

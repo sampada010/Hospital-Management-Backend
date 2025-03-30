@@ -17,5 +17,6 @@ const doctorSchema = new mongoose.Schema({
     image: String
 });
 
-const DoctorModel = mongoose.model("Doctor", doctorSchema);
+const DoctorModel = mongoose.models.Doctor || mongoose.model("Doctor", doctorSchema);
+
 export default DoctorModel;
