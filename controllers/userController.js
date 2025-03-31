@@ -4,7 +4,7 @@ import userModel from '../models/userModel.js';
 import DoctorModel from '../models/DoctorModel.js';
 import jwt from 'jsonwebtoken';
 import cloudinary from 'cloudinary';
-// import razorpay from 'razorpay';
+import razorpay from 'razorpay';
 import appointmentModel from '../models/appointmentModel.js';
 import mongoose from 'mongoose';
 
