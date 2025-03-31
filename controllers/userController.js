@@ -243,39 +243,57 @@ const cancelAppointment = async (req, res) => {
 
 
 
-// const razorpayInstance = new razorpay({
-//     key_id: process.env.RAZORPAY_KEY_ID,
-//     key_secret: process.env.RAZORPAY_SECRET_KEY,
-// });
+const razorpayInstance = new razorpay({
+    key_id: process.env.RAZORPAY_KEY_ID,
+    key_secret: process.env.RAZORPAY_SECRET_KEY,
+});
 
 
-// const paymentRazorpay = async (req, res) => {
+const paymentRazorpay = async (req, res) => {
 
-//     try {
-//         const { appointmentId } = req.body;
+    try {
+        const { appointmentId } = req.body;
 
-//         const appointmentData = await appointmentModel.findById(appointmentId);
+        const appointmentData = await appointmentModel.findById(appointmentId);
 
-//         if (!appointmentData || appointmentData.cancelled) {
-//             return res.status(400).json({ message: 'Invalid appointment or appointment cancelled' });
-//         }
+        if (!appointmentData || appointmentData.cancelled) {
+            return res.status(400).json({ message: 'Invalid appointment or appointment cancelled' });
+        }
 
-//         const options = {
-//             amount: appointmentData.amount * 100,
-//             currency: process.env.CURRENCY,
-//             receipt: appointmentId,
-//         }
+        const options = {
+            amount: appointmentData.amount * 100,
+            currency: process.env.CURRENCY,
+            receipt: appointmentId,
+        }
 
-//         const order = await razorpayInstance.orders.create(options);
-//         res.json({ success: true, order });
+        const order = await razorpayInstance.orders.create(options);
+        res.json({ success: true, order });
 
-//     } catch (error) {
-//         console.error("Error in paymentRazorpay:", error);
-//         res.status(500).json({ message: "Internal Server Error", error: error.message });
-//     }
-// }
+    } catch (error) {
+        console.error("Error in paymentRazorpay:", error);
+        res.status(500).json({ message: "Internal Server Error", error: error.message });
+    }
+}
 
 
-// export { registerUser, loginUser, getProfile, updateProfile, bookAppointment, listAppointment, cancelAppointment, paymentRazorpay };
+const verifyRazorpay = async (req, res) => {
+    try {
+        const { razorpay_order_id } = req.body
+        const orderInfo = await razorpayInstance.orders.fetch(razorpay_order_id)
 
-export { registerUser, loginUser, getProfile, updateProfile, bookAppointment, listAppointment, cancelAppointment };
+        if(orderInfo.status == 'paid') {
+            await appointmentModel.findByIdAndUpdate(orderInfo.receipt, {payment:true})
+            res.json({ success: true, message: 'Payment Successfull' });
+        } else {
+            res.json({ success: false, message: 'Payment Failed' });
+        }
+
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
+
+export { registerUser, loginUser, getProfile, updateProfile, bookAppointment, listAppointment, cancelAppointment, paymentRazorpay, verifyRazorpay };
+
+// export { registerUser, loginUser, getProfile, updateProfile, bookAppointment, listAppointment, cancelAppointment };

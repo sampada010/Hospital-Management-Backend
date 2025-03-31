@@ -21,19 +21,19 @@ npm install express mongoose multer bcrypt cloudinary cors dotenv jsonwebtoken n
 Create a .env file in the root directory and add:
 
 ```env
-MONGO_URI='mongodb+srv://sampada:UcmGHtwkiE971wnV@cluster0.7o2vp.mongodb.net'
+MONGO_URI=''
 
-CLOUDINARY_CLOUD_NAME=dm1fqqig7
-CLOUDINARY_API_KEY=452771182627213
-CLOUDINARY_API_SECRET=pAotwcFARGS4LfV2DxuFCy_zItU
+CLOUDINARY_CLOUD_NAME=''
+CLOUDINARY_API_KEY=''
+CLOUDINARY_API_SECRET=''
 
 ADMIN_EMAIL=''
 ADMIN_PASSWORD=''
-JWT_SECRET=great-secret
+JWT_SECRET=''
 
 RAZORPAY_KEY_ID=''
 RAZORPAY_SECRET_KEY=''
-CURRENCY = 'INR'
+CURRENCY = INR
 
 ```
 
