@@ -8,6 +8,19 @@ import razorpay from 'razorpay';
 import appointmentModel from '../models/appointmentModel.js';
 import mongoose from 'mongoose';
 
+
+const getAllDoctors = async (req, res) => {
+    try {
+        const doctors = await DoctorModel.find({}, '-password');
+        res.status(200).json({success:true, doctors});
+    } catch (error) {
+        console.log(error);
+        res.json.status(500).json({ message: 'Internal Server Error' })
+    }
+}
+
+
+
 const registerUser = async (req, res) => {
     try {
         const { name, email, password } = req.body;
@@ -17,6 +30,13 @@ const registerUser = async (req, res) => {
         if (!validator.isEmail(email)) {
             return res.status(400).json({ message: 'Invalid email address' });
         }
+        
+        // Check if the user already exists
+        const existingUser = await userModel.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ message: 'User already registered. Please log in.' });
+        }
+
         if (password.length < 8) {
             return res.status(400).json({ message: 'Password must be at least 8 characters' });
         }
@@ -84,7 +104,7 @@ const getProfile = async (req, res) => {
 
 const updateProfile = async (req, res) => {
     try {
-        const userId = req.user?.id; // Ensure userId is retrieved correctly
+        const userId = req.user?.id;
         const { name, phone, address, dob, gender } = req.body;
         const imageFile = req.file; // Image from request
 
@@ -294,6 +314,6 @@ const verifyRazorpay = async (req, res) => {
 }
 
 
-export { registerUser, loginUser, getProfile, updateProfile, bookAppointment, listAppointment, cancelAppointment, paymentRazorpay, verifyRazorpay };
+export { getAllDoctors, registerUser, loginUser, getProfile, updateProfile, bookAppointment, listAppointment, cancelAppointment, paymentRazorpay, verifyRazorpay };
 
 // export { registerUser, loginUser, getProfile, updateProfile, bookAppointment, listAppointment, cancelAppointment };
