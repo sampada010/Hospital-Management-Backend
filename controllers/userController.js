@@ -153,7 +153,7 @@ const updateProfile = async (req, res) => {
 
 const bookAppointment = async (req, res) => {
     try {
-        const { userId, docId, slotDate, slotTime, amount } = req.body;
+        const { userId, docId, slotDate, slotTime, amount, reason } = req.body;
 
         // Validate doctor ID
         if (!mongoose.Types.ObjectId.isValid(docId)) {
@@ -165,6 +165,8 @@ const bookAppointment = async (req, res) => {
         if (!doctor) {
             return res.status(404).json({ message: "Doctor not found" });
         }
+
+        amount = doctor.fee;
 
         // Fetch user data
         const user = await userModel.findById(userId);
@@ -192,6 +194,7 @@ const bookAppointment = async (req, res) => {
             slotDate,
             slotTime,
             amount,
+            reason,
             userData,
             docData,
             date: Date.now(),
