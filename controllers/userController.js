@@ -20,7 +20,6 @@ const getAllDoctors = async (req, res) => {
 }
 
 
-
 const registerUser = async (req, res) => {
     try {
         const { name, email, password } = req.body;
@@ -63,6 +62,7 @@ const registerUser = async (req, res) => {
     }
 }
 
+
 const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -82,6 +82,7 @@ const loginUser = async (req, res) => {
         res.status(500).json({ message: 'Internal Server Error' })
     }
 }
+
 
 const getProfile = async (req, res) => {
     try {
@@ -166,7 +167,7 @@ const bookAppointment = async (req, res) => {
             return res.status(404).json({ message: "Doctor not found" });
         }
 
-        amount = doctor.fee;
+        // amount = doctor.fee;
 
         // Fetch user data
         const user = await userModel.findById(userId);
@@ -211,7 +212,6 @@ const bookAppointment = async (req, res) => {
 };
 
 
-
 const listAppointment = async (req, res) => {
     try {
         const { userId } = req.body;
@@ -225,6 +225,7 @@ const listAppointment = async (req, res) => {
 
     }
 }
+
 
 const cancelAppointment = async (req, res) => {
     try {
