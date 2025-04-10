@@ -3,6 +3,7 @@ import validator from 'validator';
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken';
 import appointmentModel from "../models/appointmentModel.js";
+import userModel from '../models/userModel.js';
 
 const addDoctor = async (req, res) => {
     try {
@@ -85,6 +86,16 @@ const allDoctors = async (req, res) => {
     }
 }
 
+const allUsers = async (req, res) => {
+    try {
+        const users = await userModel.find({}).select("-password -__v");
+        res.status(200).json(users);
+    } catch (error) {
+        console.error("❌ Error:", error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+}
+
 
 const appointmentsAdmin = async (req, res) => {
     try {
@@ -100,4 +111,4 @@ const appointmentsAdmin = async (req, res) => {
 }
 
 
-export { addDoctor, loginAdmin, allDoctors, appointmentsAdmin };
+export { addDoctor, loginAdmin, allDoctors, appointmentsAdmin, allUsers };
