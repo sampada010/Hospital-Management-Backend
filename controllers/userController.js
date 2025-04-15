@@ -274,7 +274,6 @@ const razorpayInstance = new razorpay({
 
 
 const paymentRazorpay = async (req, res) => {
-
     try {
         const { appointmentId } = req.body;
 
@@ -291,7 +290,15 @@ const paymentRazorpay = async (req, res) => {
         }
 
         const order = await razorpayInstance.orders.create(options);
-        res.json({ success: true, order });
+        
+        // Include key_id in response along with the order
+        res.json({ 
+            success: true, 
+            order_id: order.id,
+            amount: appointmentData.amount * 100,
+            currency: process.env.CURRENCY,
+            key_id: process.env.RAZORPAY_KEY_ID
+        });
 
     } catch (error) {
         console.error("Error in paymentRazorpay:", error);
