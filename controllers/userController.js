@@ -327,4 +327,3 @@ const verifyRazorpay = async (req, res) => {
 
 export { getAllDoctors, registerUser, loginUser, getProfile, updateProfile, bookAppointment, listAppointment, cancelAppointment, paymentRazorpay, verifyRazorpay };
 
-// export { registerUser, loginUser, getProfile, updateProfile, bookAppointment, listAppointment, cancelAppointment };
