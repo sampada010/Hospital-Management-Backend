@@ -1,4 +1,4 @@
-import DoctorModel from '../models/DoctorModel.js';
+import DoctorModel from '../models/doctorModel.js';
 import validator from 'validator';
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken';
