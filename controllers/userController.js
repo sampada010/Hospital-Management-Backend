@@ -1,7 +1,7 @@
 import validator from 'validator';
 import bcrypt from 'bcrypt'
 import userModel from '../models/userModel.js';
-import DoctorModel from '../models/DoctorModel.js';
+import DoctorModel from '../models/doctorModel.js';
 import jwt from 'jsonwebtoken';
 import cloudinary from 'cloudinary';
 import razorpay from 'razorpay';
@@ -327,4 +327,3 @@ const verifyRazorpay = async (req, res) => {
 
 export { getAllDoctors, registerUser, loginUser, getProfile, updateProfile, bookAppointment, listAppointment, cancelAppointment, paymentRazorpay, verifyRazorpay };
 
-// export { registerUser, loginUser, getProfile, updateProfile, bookAppointment, listAppointment, cancelAppointment };
